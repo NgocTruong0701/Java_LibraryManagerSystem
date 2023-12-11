@@ -1,5 +1,7 @@
 <%@page import="it602003.objects.UserObject"%>
 <%@page import="java.util.ArrayList"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 
 <%@ include file="component/header.jsp"%>
 <body>
@@ -15,7 +17,7 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>User ID</th>
+                                <th>Index</th>
                                 <th>User Name</th>
                                 <th>User Image</th>
                                 <th>User Phone Number</th>
@@ -43,7 +45,7 @@
                                 <td><%=user.getUser_address()%></td>
                                 <td><%=user.getUser_account_name()%></td>
                                 <td><%=user.getUser_account_password()%></td>
-                                <td><%=user.getUser_role()%></td>
+                                <td><%=user.getUser_role() == 1 ? "User" : "Admin"%></td>
                             </tr>
                             <% 
                             }

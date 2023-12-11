@@ -1,0 +1,14 @@
+@charset "UTF-8";
+.custom-container {
+    max-width: 90%; /* Điều chỉnh chiều rộng tối đa */
+    margin: 0 auto; /* Canh giữa nội dung */
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+}
