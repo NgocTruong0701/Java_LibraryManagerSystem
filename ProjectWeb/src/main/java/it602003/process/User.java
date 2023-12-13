@@ -62,12 +62,12 @@ public class User {
 					user.setUser_address(rs.getString("user_address"));
 					user.setUser_account_name(rs.getString("user_account_name"));
 					user.setUser_account_password(rs.getString("user_account_password"));
+					users.add(user);
 				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
@@ -75,7 +75,6 @@ public class User {
 				e1.printStackTrace();
 			}
 		}
-
 		return users;
 	}
 
@@ -83,7 +82,7 @@ public class User {
 	public boolean addUser(UserObject user) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
-				"INSERT INTO tbluser (user_name, user_image, user_phone_number, user_address, user_account_name, user_account_password, user_role, created_at, updated_at)");
+				"INSERT INTO tbluser (user_name, user_image, user_phone_number, user_address, user_account_name, user_account_password, user_role)");
 		sql.append("VALUES (?, ?, ?, ?, ?, ?, ?)");
 
 		try {

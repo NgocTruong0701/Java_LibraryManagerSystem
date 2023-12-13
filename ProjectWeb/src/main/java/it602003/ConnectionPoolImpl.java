@@ -32,7 +32,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
 		}
 
 		// Xác định đường dẫn
-		this.url ="jdbc:mysql://localhost:3307/library_manager_system";
+		this.url = "jdbc:mysql://localhost:3307/library_manager_system?useUnicode=true&characterEncoding=UTF-8";
 
 		// Xác định tài khoản
 		this.username = "library_admin";
