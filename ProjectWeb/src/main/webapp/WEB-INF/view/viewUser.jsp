@@ -1,19 +1,29 @@
-<%@page import="it602003.objects.UserObject"%>
 <%@page import="java.util.ArrayList"%>
+<%@page import="it602003.objects.UserObject" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
-<%@ include file="component/header.jsp"%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Head content -->
+<!-- Import Bootstrap CSS -->
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+<link rel="stylesheet" href="/lnt.library/css/main.css" />
+</head>
 <body>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-2">
-                <%@ include file="component/sidebar.jsp"%>
-            </div>
-            <div class="col-md-10">
-                <!-- Your main content -->
-                <div class="container mt-4">
-                    <h1 class="mb-4">User List</h1>
+	<!-- Import header -->
+	<div class="custom-container">
+		<jsp:include page="component/header.jsp" />
+		<div class="row">
+			<!-- Import sidebar -->
+			<aside class="col-lg-3">
+				<jsp:include page="component/sidebar.jsp" />
+			</aside>
+
+			<!-- Main content -->
+			<main class="col-lg-9">
+				<h1 class="mb-4">User List</h1>
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
@@ -52,9 +62,15 @@
                             %>
                         </tbody>
                     </table>
-                </div>
-            </div>
-        </div>
-    </div>
+			</main>
+		</div>
+	</div>
+
+	<!-- Import footer -->
+	<jsp:include page="component/footer.jsp" />
+
+	<!-- Import Bootstrap JavaScript -->
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-<%@ include file="component/footer.jsp"%>
+</html>
