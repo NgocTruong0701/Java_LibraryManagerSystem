@@ -64,7 +64,7 @@ public class UserAddView extends HttpServlet {
 
 		if (userImage != null) {
 			String fileName = Paths.get(userImage.getSubmittedFileName()).getFileName().toString(); // Tên file gốc
-			String uploadPath = getServletContext().getRealPath("/image");
+			String uploadPath = getServletContext().getRealPath("/") + "image";
 			File file = new File(uploadPath + File.separator + fileName); // File.separator dùng để lấy kí tự phân cách
 																			// trên hệ điều hành
 			// Lưu tập tin hình ảnh xuống
@@ -81,7 +81,7 @@ public class UserAddView extends HttpServlet {
 				// Đọc dữ liệu từ InputStream của part và ghi xuống OutputStream để lưu tập tin
 				// hình ảnh
 				int read;
-				final byte[] bytes = new byte[1024];
+				final byte[] bytes = new byte[fileContent.available()];
 				while ((read = fileContent.read(bytes)) != -1) {
 					out.write(bytes, 0, read);
 				}

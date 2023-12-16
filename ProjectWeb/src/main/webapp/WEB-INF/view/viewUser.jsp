@@ -1,3 +1,4 @@
+<%@page import="java.io.File"%>
 <%@page import="it602003.process.User"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="it602003.objects.UserObject"%>
@@ -53,8 +54,8 @@
 						<tr>
 							<td><%=user.getUser_id()%></td>
 							<td><%=user.getUser_name()%></td>
-							<td><img src="<%=user.getUser_image()%>" alt="User Image"
-								width="50" height="50"></td>
+							<td><img src="ImageDisplayServlet?imageName=<%= user.getUser_image() %>"
+								alt="User Image" width="50" height="50"></td>
 							<td><%=user.getUser_phone_number()%></td>
 							<td><%=user.getUser_address()%></td>
 							<td><%=user.getUser_account_name()%></td>
@@ -83,6 +84,7 @@
 	<!-- Import Bootstrap JavaScript -->
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
