@@ -169,7 +169,7 @@ public class User {
 	// Remove User
 	public boolean removeUser(int user_id) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM tbluser WHERE product_id = ?");
+		sql.append("DELETE FROM tbluser WHERE user_id = ?");
 
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql.toString());

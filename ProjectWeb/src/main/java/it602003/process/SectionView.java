@@ -77,7 +77,8 @@ public class SectionView extends HttpServlet {
 		out.append("<tbody>");
 
 		Section s = new Section();
-		ArrayList<SectionObject> list = s.getSectionObjects(null, (byte)100);
+		
+		ArrayList<SectionObject> list = new ArrayList<>();
 		list.forEach(item -> {
 			out.append("<tr>");
 			out.append("<th scope=\"row\">" + item.getSection_id() + "</th>");

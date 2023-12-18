@@ -71,6 +71,7 @@
 
 						<!-- Nút Submit -->
 						<button type="submit" class="btn btn-primary">Thêm</button>
+						<a href="${pageContext.request.contextPath}/user" class="btn btn-primary ml-4">Trở về</a>
 					</form>
 				</div>
 			</main>

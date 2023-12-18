@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/view/component/confirmDelete.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/component/footer.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/component/header.jsp=UTF-8
 encoding//src/main/webapp/WEB-INF/view/component/sidebar.jsp=UTF-8
