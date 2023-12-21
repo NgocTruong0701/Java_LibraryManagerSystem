@@ -75,8 +75,6 @@ public class SectionView extends HttpServlet {
 		out.append("</tr>");
 		out.append("</thead>");
 		out.append("<tbody>");
-
-		Section s = new Section();
 		
 		ArrayList<SectionObject> list = new ArrayList<>();
 		list.forEach(item -> {

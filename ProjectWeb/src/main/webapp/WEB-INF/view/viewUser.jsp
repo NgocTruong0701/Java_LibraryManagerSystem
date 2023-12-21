@@ -1,3 +1,4 @@
+<%@page import="com.mysql.cj.x.protobuf.MysqlxDatatypes.Array"%>
 <%@page import="java.io.File"%>
 <%@page import="it602003.process.User"%>
 <%@page import="java.util.ArrayList"%>
@@ -27,19 +28,20 @@
 	<!-- Import header -->
 	<div class="custom-container">
 		<jsp:include page="component/header.jsp" />
-		<div class="row">
+		<div class="row main">
 			<!-- Import sidebar -->
-			<aside class="col-lg-2">
+			<aside class="col-lg-3">
 				<jsp:include page="component/sidebar.jsp" />
 			</aside>
 
 			<!-- Main content -->
-			<main class="col-lg-10 container-lg">
+			<main class="col-lg-9 container-lg">
 				<div class="card my-4">
 					<div class="card-header text-bg-primary"></div>
 					<div class="card-body">
 						<h1 class="mb-4">Danh sách người mượn</h1>
-						<a href="${pageContext.request.contextPath}/user/create" class="btn btn-primary mb-3">Thêm mới</a>
+						<a href="${pageContext.request.contextPath}/user/create"
+							class="btn btn-primary mb-3">Thêm mới</a>
 						<table class="table table-striped table-hover table-sm">
 							<thead>
 								<tr>
@@ -51,14 +53,16 @@
 									<th scope="col">User Account Name</th>
 									<th scope="col">User Account Password</th>
 									<th scope="col">User Role</th>
-									<th scope="col" class="align-middle d-flex justify-content-center" colspan="2">Action</th>
+									<th scope="col" class="align-middle justify-content-center"
+										colspan="2">Action</th>
 								</tr>
 							</thead>
 							<tbody>
 								<%
 								int index = 0;
-								User u = new User();
-								ArrayList<UserObject> users = u.getuserObjects(0, (byte) 10);
+								ArrayList<UserObject> users = (ArrayList<UserObject>) request.getAttribute("users");
+								int currentPage = (int) request.getAttribute("currentPage");
+								int totalPages = (int) request.getAttribute("totalPages");
 								// Assume users is a list of User objects retrieved from your backend
 								for (UserObject user : users) {
 								%>
@@ -73,9 +77,12 @@
 									<td class="align-middle"><%=user.getUser_account_name()%></td>
 									<td class="align-middle"><%=user.getUser_account_password()%></td>
 									<td class="align-middle"><%=user.getUser_role() == 0 ? "User" : "Admin"%></td>
-									<td><a href="#" class="btn btn-outline-warning btn-sm"><i
+									<td class="align-middle"><a
+										href="${pageContext.request.contextPath}/user/update?id=<%= user.getUser_id()%>"
+										class="btn btn-outline-warning btn-sm"><i
 											class="fa-solid fa-pen-to-square"></i> Edit</a></td>
-									<td><a href="#" data-bs-toggle="modal"
+									<td class="align-middle"><a href="#"
+										data-bs-toggle="modal"
 										data-bs-target="#del<%=user.getUser_id()%>"
 										class="btn btn-outline-danger btn-sm"><i
 											class="fa-regular fa-trash-can"></i> Delete</a></td>
@@ -98,7 +105,7 @@
 											<div class="modal-body text-danger text-center">
 												<h5>
 													Bạn có thực sự muốn xóa
-													<%=user.getUser_id()%></h5>
+													<%=user.getUser_name()%></h5>
 											</div>
 											<div class="modal-footer text-bg-light bg-gradient">
 												<form
@@ -124,19 +131,36 @@
 								%>
 							</tbody>
 						</table>
+						<div
+							class="pagination align-items-center">
+							<%-- Hiển thị các nút phân trang --%>
+							<%
+							for (int i = 1; i <= totalPages; i++) {
+							%>
+							<a href="${pageContext.request.contextPath}/user?page=<%= i %>"
+								class="btn btn-primary me-2 <%= (currentPage == i) ? "active" : "" %>">
+								<%=i%>
+							</a>
+							<%
+							}
+							%>
+							<b class="m-0">
+								Page:
+								<%=currentPage%>/<%=totalPages%>
+							</b>
+						</div>
 					</div>
 					<div class="card-footer text-bg-info"></div>
 				</div>
 			</main>
 		</div>
-	</div>
 
-	<!-- Import footer -->
-	<jsp:include page="component/footer.jsp" />
+		<!-- Import footer -->
+		<jsp:include page="component/footer.jsp" />
+	</div>
 
 	<!-- Import Bootstrap 5 JavaScript -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
