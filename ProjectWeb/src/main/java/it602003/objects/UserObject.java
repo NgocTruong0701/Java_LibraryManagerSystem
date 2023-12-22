@@ -10,6 +10,7 @@ public class UserObject {
 	private String user_account_password; 
 	private int user_role; 
 	private String created_at; 
+	private String updated_at;
 	
 	public int getUser_id() {
 		return user_id;
@@ -71,7 +72,6 @@ public class UserObject {
 	public void setUpdated_at(String updated_at) {
 		this.updated_at = updated_at;
 	}
-	private String updated_at;
 
 	public UserObject(int user_id, String user_name, String user_image, String user_phone_number, String user_address,
 			String user_account_name, String user_account_password, int user_role, String created_at,

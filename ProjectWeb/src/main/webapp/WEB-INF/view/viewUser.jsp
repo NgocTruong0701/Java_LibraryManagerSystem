@@ -131,8 +131,7 @@
 								%>
 							</tbody>
 						</table>
-						<div
-							class="pagination align-items-center">
+						<div class="pagination align-items-center">
 							<%-- Hiển thị các nút phân trang --%>
 							<%
 							for (int i = 1; i <= totalPages; i++) {
@@ -144,19 +143,17 @@
 							<%
 							}
 							%>
-							<b class="m-0">
-								Page:
-								<%=currentPage%>/<%=totalPages%>
+							<b class="m-0"> Page: <%=currentPage%>/<%=totalPages%>
 							</b>
 						</div>
 					</div>
 					<div class="card-footer text-bg-info"></div>
 				</div>
 			</main>
+			<!-- Import footer -->
+			<jsp:include page="component/footer.jsp" />
 		</div>
 
-		<!-- Import footer -->
-		<jsp:include page="component/footer.jsp" />
 	</div>
 
 	<!-- Import Bootstrap 5 JavaScript -->

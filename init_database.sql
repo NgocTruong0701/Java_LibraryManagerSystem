@@ -13,7 +13,6 @@ CREATE TABLE tblcategory (
 CREATE TABLE tblauthor (
     author_id INT AUTO_INCREMENT PRIMARY KEY,
     author_name VARCHAR(255),
-    author_born DATE,
     author_date_of_birth DATE,
     author_description TEXT,
     author_image VARCHAR(255)
