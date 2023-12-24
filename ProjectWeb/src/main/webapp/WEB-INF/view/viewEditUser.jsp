@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
 <head>
@@ -25,20 +26,16 @@
 </head>
 
 
-<body>
+<body class="app">
 	<!-- Import header -->
-	<div class="custom-container">
-		<jsp:include page="component/header.jsp" />
-		<div class="row">
-			<!-- Import sidebar -->
-			<aside class="col-lg-3">
-				<jsp:include page="component/sidebar.jsp" />
-			</aside>
-
+	<jsp:include page="component/header.jsp" />
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<!-- Main content -->
-			<main class="col-lg-9">
+			<main class="container-fluid">
+
 				<div class="form-container">
-					<h2>Chỉnh sửa thông tin người dùng</h2>
+					<h2>Chỉnh sửa thông tin người đọc</h2>
 					<hr>
 					<form enctype="multipart/form-data"
 						action="${pageContext.request.contextPath}/user/update"
@@ -50,19 +47,19 @@
 						</div>
 
 						<div class="form-group mb-2">
-							<label for="user_name">User Name:</label> <input type="text"
-								class="form-control" id="user_name" name="user_name"
-								value="<%=request.getAttribute("user_name")%>"
+							<label for="user_name">Tên người đọc:<span class="rq">*</span></label>
+							<input type="text" class="form-control" id="user_name"
+								name="user_name" value="<%=request.getAttribute("user_name")%>"
 								required="required" />
 						</div>
 
 						<!-- Chọn hình ảnh -->
 						<div class="form-group mb-2">
-							<label for="user_image">User Image:</label> <img
-								id="previewImage"
+							<label for="user_image">Avatar:<img id="previewImage"
 								src="${pageContext.request.contextPath}/ImageDisplayServlet?imageName=<%=request.getAttribute("user_image")%>"
-								alt="User Image" width="150" height="150" class="border border-info"> <input
-								type="file" class="form-control-file" id="user_image_input"
+								alt="User Image" width="150" height="150"
+								class="border border-info"> <input type="file"
+								class="form-control-file" id="user_image_input"
 								name="user_image"
 								value="<%=request.getAttribute("user_image")%>"
 								onchange="previewSelectedImage(this)"> <input
@@ -72,31 +69,35 @@
 
 						<!-- Số điện thoại -->
 						<div class="form-group mb-2">
-							<label for="user_phone_number">Phone Number:</label> <input
-								type="text" class="form-control" id="user_phone_number"
+							<label for="user_phone_number">Số điện thoại:<span
+								class="rq">*</span></label> <input type="text" class="form-control"
+								id="user_phone_number"
 								value="<%=request.getAttribute("user_phone_number")%>"
 								name="user_phone_number" required="required">
 						</div>
 
 						<!-- Địa chỉ -->
 						<div class="form-group mb-2">
-							<label for="user_address">Address:</label> <input type="text"
-								class="form-control" id="user_address" name="user_address"
+							<label for="user_address">Địa chỉ:<span class="rq">*</span></label>
+							<input type="text" class="form-control" id="user_address"
+								name="user_address"
 								value="<%=request.getAttribute("user_address")%>"
 								required="required">
 						</div>
 
 						<!-- Tên tài khoản -->
 						<div class="form-group mb-2">
-							<label for="user_account_name">Account Name:</label> <input
-								type="text" class="form-control" id="user_account_name"
-								name="user_account_name" required="required"
+							<label for="user_account_name">Tên tài khoản:<span
+								class="rq">*</span></label> <input type="text" class="form-control"
+								id="user_account_name" name="user_account_name"
+								required="required"
 								value="<%=request.getAttribute("user_account_name")%>" readonly>
 						</div>
 
 						<!-- Mật khẩu tài khoản -->
 						<div class="form-group mb-3">
-							<label for="user_account_password">Account Password:</label>
+							<label for="user_account_password">Mật khẩu:<span
+								class="rq">*</span></label>
 							<div class="input-group align-items-center">
 								<input type="password" class="form-control"
 									id="user_account_password" name="user_account_password"
@@ -111,24 +112,22 @@
 							</div>
 						</div>
 
-						<div>
+						<hr>
+
+						<div class="mt-3">
 							<!-- Nút Submit -->
-							<button type="submit" class="btn btn-primary">Cập nhật</button>
+							<button type="submit" class="btn btn-primary text-white">Cập
+								nhật</button>
 							<a href="${pageContext.request.contextPath}/user"
-								class="btn btn-primary ml-6">Trở về</a>
+								class="btn btn-primary ml-6 text-white">Trở về</a>
 						</div>
 					</form>
 				</div>
 			</main>
 		</div>
+		<!-- Import footer -->
+		<jsp:include page="component/footer.jsp" />
 	</div>
-
-	<!-- Import footer -->
-	<jsp:include page="component/footer.jsp" />
-
-	<!-- Import Bootstrap JavaScript -->
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 	<script>
 		function previewSelectedImage(input) {
@@ -163,4 +162,5 @@
 		}
 	</script>
 </body>
+
 </html>

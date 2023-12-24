@@ -8,40 +8,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Head content -->
-<!-- Import Bootstrap 5 CSS -->
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-	crossorigin="anonymous">
-<link rel="stylesheet" href="/lnt.library/css/main.css" />
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-	rel="stylesheet">
-<link href="/lnt.library/css/all.min.css" rel="stylesheet"
-	type="text/css" />
-<link href="/lnt.library/css/apexcharts.css" rel="stylesheet"
-	type="text/css" />
 </head>
-<body>
+<body class="app">
 	<!-- Import header -->
-	<div class="custom-container">
-		<jsp:include page="component/header.jsp" />
-		<div class="row main">
-			<!-- Import sidebar -->
-			<aside class="col-lg-3">
-				<jsp:include page="component/sidebar.jsp" />
-			</aside>
-
+	<jsp:include page="component/header.jsp" />
+	<div class="app-wrapper">
+		<div class="app-content pt-3 p-md-3 p-lg-4">
 			<!-- Main content -->
-			<main class="col-lg-9 container-lg">
+			<main class="container-fluid">
 				<div class="card my-4">
 					<div class="card-header text-bg-primary"></div>
 					<div class="card-body">
 						<h1 class="mb-4">Danh sách người mượn</h1>
 						<a href="${pageContext.request.contextPath}/user/create"
-							class="btn btn-primary mb-3">Thêm mới</a>
+							class="btn btn-primary mb-3 text-white">Thêm mới</a>
 						<table class="table table-striped table-hover table-sm">
 							<thead>
 								<tr>
@@ -104,7 +84,7 @@
 											</div>
 											<div class="modal-body text-danger text-center">
 												<h5>
-													Bạn có thực sự muốn xóa
+													Bạn có thực sự muốn xóa người đọc
 													<%=user.getUser_name()%></h5>
 											</div>
 											<div class="modal-footer text-bg-light bg-gradient">
@@ -137,7 +117,7 @@
 							for (int i = 1; i <= totalPages; i++) {
 							%>
 							<a href="${pageContext.request.contextPath}/user?page=<%= i %>"
-								class="btn btn-primary me-2 <%= (currentPage == i) ? "active" : "" %>">
+								class="btn btn-primary me-2 text-white <%= (currentPage == i) ? "active" : "" %>">
 								<%=i%>
 							</a>
 							<%
@@ -150,14 +130,9 @@
 					<div class="card-footer text-bg-info"></div>
 				</div>
 			</main>
-			<!-- Import footer -->
-			<jsp:include page="component/footer.jsp" />
 		</div>
-
+		<!-- Import footer -->
+		<jsp:include page="component/footer.jsp" />
 	</div>
-
-	<!-- Import Bootstrap 5 JavaScript -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -13,3 +13,8 @@ footer {
     text-align: center;
     padding: 10px 0;
 }
+
+.rq{
+	color:red;
+	font-weight: bold;
+}

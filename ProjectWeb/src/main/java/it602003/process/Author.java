@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import it602003.ConnectionPool;
@@ -36,7 +38,7 @@ public class Author {
 	}
 
 	// Get all author has role is author
-	public ArrayList<AuthorObject> getAuthorObjects(int role, int page, int pageSize) {
+	public ArrayList<AuthorObject> getAuthorObjects(int page, int pageSize) {
 		
 		int start = (page - 1) * pageSize;
 		ArrayList<AuthorObject> authors = new ArrayList<>();
@@ -50,9 +52,8 @@ public class Author {
 			PreparedStatement pre = this.con.prepareStatement(sql); // Biên dịch câu truy vấn SQL. Được tạo từ
 																	// Connection và câu lệnh SQL được chuẩn bị
 			// sau khi biên dịch thì truyền tham số vào
-			pre.setInt(1, role);
-			pre.setInt(2, pageSize); // Thiết lập giá trị cho cho tham số trong câu lệnh truy vấn
-			pre.setInt(3, start);
+			pre.setInt(1, pageSize); // Thiết lập giá trị cho cho tham số trong câu lệnh truy vấn
+			pre.setInt(2, start);
 
 			ResultSet rs = pre.executeQuery(); // Lấy tập kết quả trả về
 			if (rs != null) {
@@ -60,7 +61,14 @@ public class Author {
 					author = new AuthorObject();
 					author.setAuthor_id(rs.getInt("author_id"));
 					author.setAuthor_name(rs.getString("author_name"));
-					author.setAuthor_date_of_birth(rs.getString("author_date_of_birth"));
+					
+					DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			        DateTimeFormatter newFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+			        // Chuyển đổi ngày tháng từ định dạng cũ sang định dạng mới
+			        LocalDate date = LocalDate.parse(rs.getString("author_date_of_birth"), originalFormatter);
+			        String formattedDate = date.format(newFormatter);
+					author.setAuthor_date_of_birth(formattedDate);
+					
 					author.setAuthor_description(rs.getString("author_description"));
 					author.setAuthor_image(rs.getString("author_image"));
 					author.setCreated_at(rs.getString("created_at"));
@@ -82,18 +90,17 @@ public class Author {
 	}
 	
 	// Get author by author ID
-	public AuthorObject getAuthorObjectsById(int role, int author_id) {
+	public AuthorObject getAuthorObjectsById(int author_id) {
 		AuthorObject author = new AuthorObject();
 
-		String sql = "SELECT * FROM tblauthor author_id = ? LIMIT 1";
+		String sql = "SELECT * FROM tblauthor WHERE author_id = ? LIMIT 1";
 
 		// Dùng PreparedStatement để truyền tham số vào và có thể dùng nhiều lần
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql); // Biên dịch câu truy vấn SQL. Được tạo từ
 																	// Connection và câu lệnh SQL được chuẩn bị
 			// sau khi biên dịch thì truyền tham số vào
-			pre.setInt(1, role); 
-			pre.setInt(2, author_id);// Thiết lập giá trị cho cho tham số trong câu lệnh truy vấn
+			pre.setInt(1, author_id);// Thiết lập giá trị cho cho tham số trong câu lệnh truy vấn
 
 			ResultSet rs = pre.executeQuery(); // Lấy tập kết quả trả về
 			if (rs != null) {
@@ -121,7 +128,7 @@ public class Author {
 		return author;
 	}
 
-	// Add author has role is author
+	// Add author
 	public boolean addAuthor(AuthorObject author) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
@@ -163,7 +170,7 @@ public class Author {
 	}
 
 	// Edit author
-	public boolean editauthor(int author_id, AuthorObject author) {
+	public boolean editAuthor(int author_id, AuthorObject author) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE tblauthor SET ");
 		sql.append(
@@ -234,14 +241,12 @@ public class Author {
 	}
 	
 	
-	public int getTotalAuthors(int role) {
+	public int getTotalAuthors() {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT COUNT(*) FROM tblauthor");
 		int total = 0;
 		try {
 			PreparedStatement pre = this.con.prepareStatement(sql.toString());
-			
-			pre.setInt(1, role);
 			
 			ResultSet rs = pre.executeQuery();
 			if(rs != null) {
@@ -269,5 +274,116 @@ public class Author {
 		}
 		return total;
 	}
+	
+	public ArrayList<AuthorObject> getAllAuthors() {
+	    ArrayList<AuthorObject> authors = new ArrayList<>();
 
+	    String sql = "SELECT * FROM tblauthor ORDER BY author_id ASC";
+
+	    try {
+	        PreparedStatement pre = this.con.prepareStatement(sql);
+	        ResultSet rs = pre.executeQuery();
+
+	        while (rs.next()) {
+	            AuthorObject author = new AuthorObject();
+	            author.setAuthor_id(rs.getInt("author_id"));
+	            author.setAuthor_name(rs.getString("author_name"));
+	            author.setAuthor_date_of_birth(rs.getString("author_date_of_birth"));
+	            author.setAuthor_description(rs.getString("author_description"));
+	            author.setAuthor_image(rs.getString("author_image"));
+	            author.setCreated_at(rs.getString("created_at"));
+	            author.setUpdated_at(rs.getString("updated_at"));
+	            authors.add(author);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        try {
+	            con.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	    } finally {
+	        // Đảm bảo đóng tất cả các tài nguyên
+	        try {
+	            if (con != null) {
+	                con.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+
+	    return authors;
+	}
+	
+	public int getBookTotal(int author_id) {
+	    int bookTotal = 0;
+	    
+	    String sql = "SELECT COUNT(*) FROM tblauthor INNER JOIN tblbook ON tblauthor.author_id = tblbook.author_id WHERE tblauthor.author_id = ?";
+	    
+	    try {
+	        PreparedStatement pre = this.con.prepareStatement(sql);
+	        pre.setInt(1, author_id); // Set tham số author_id vào câu truy vấn
+	        
+	        ResultSet rs = pre.executeQuery();
+	        if(rs.next()) {
+	            bookTotal = rs.getInt(1); // Lấy giá trị từ cột COUNT(*)
+	        }
+	        
+	        // Đóng ResultSet và PreparedStatement
+	        if (rs != null) {
+	            rs.close();
+	        }
+	        if (pre != null) {
+	            pre.close();
+	        }
+	    }
+	    catch(Exception e) {
+	        e.printStackTrace();
+	        try {
+	            con.rollback();
+	        } catch (SQLException e1) {
+	            e1.printStackTrace();
+	        }
+	    }
+	    return bookTotal;
+	}
+
+	
+	public AuthorObject searchBook(int author_id) {
+		String sql = "SELECT * FROM tblauthor WHERE author_id = ? LIMIT 1";
+
+		AuthorObject author = new AuthorObject();
+
+		try {
+			PreparedStatement pre = this.con.prepareStatement(sql);
+
+			pre.setInt(1, author_id);
+
+			ResultSet rs = pre.executeQuery();
+			if (rs != null) {
+				if (rs.next()) {
+					author.setAuthor_id(rs.getInt("author_id"));
+					author.setAuthor_name(rs.getString("author_name"));
+					author.setAuthor_date_of_birth(rs.getString("author_date_of_birth"));
+					author.setAuthor_description(rs.getString("author_description"));
+					author.setAuthor_image(rs.getString("author_image"));
+					author.setCreated_at(rs.getString("created_at"));
+					author.setUpdated_at(rs.getString("updated_at"));
+					return author;
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				this.con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+
+		return author;
+	}
 }

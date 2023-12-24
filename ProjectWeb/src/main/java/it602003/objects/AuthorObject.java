@@ -69,5 +69,4 @@ public class AuthorObject {
 		this.updated_at = updated_at;
 	}
 	
-	
 }
