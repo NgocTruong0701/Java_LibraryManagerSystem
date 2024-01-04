@@ -82,7 +82,7 @@
                         <th scope="col">Actions</th>
                         <th scope="col">STT</th>
                         <th scope="col">Tên danh mục</th>
-                        <th scope="col">Tổng lượng sách</th>
+                        <th scope="col">Tổng đầu sách</th>
                         <!-- Add more columns as needed -->
                     </tr>
                 </thead>

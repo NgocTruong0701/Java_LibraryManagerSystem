@@ -240,6 +240,45 @@ public class User {
 		return false;
 	}
 	
+	public UserObject Login(String userName, String password) {
+		UserObject user = new UserObject();
+
+		String sql = "SELECT * FROM tbluser WHERE user_account_name = ? AND user_account_password = ? LIMIT 1";
+
+		// Dùng PreparedStatement để truyền tham số vào và có thể dùng nhiều lần
+		try {
+			PreparedStatement pre = this.con.prepareStatement(sql); // Biên dịch câu truy vấn SQL. Được tạo từ
+																	// Connection và câu lệnh SQL được chuẩn bị
+			// sau khi biên dịch thì truyền tham số vào
+			pre.setString(1, userName); 
+			pre.setString(2, password);// Thiết lập giá trị cho cho tham số trong câu lệnh truy vấn
+
+			ResultSet rs = pre.executeQuery(); // Lấy tập kết quả trả về
+			if (rs != null) {
+				while (rs.next()) {
+					user.setUser_id(rs.getInt("user_id"));
+					user.setUser_name(rs.getString("user_name"));
+					user.setUser_image(rs.getString("user_image"));
+					user.setUser_phone_number(rs.getString("user_phone_number"));
+					user.setUser_address(rs.getString("user_address"));
+					user.setUser_account_name(rs.getString("user_account_name"));
+					user.setUser_account_password(rs.getString("user_account_password"));
+					user.setUser_role(rs.getInt("user_role"));
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			try {
+				con.rollback();
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		}
+		return user;
+	}
+	
 	
 	public int getTotalUsers(int role) {
 		StringBuilder sql = new StringBuilder();

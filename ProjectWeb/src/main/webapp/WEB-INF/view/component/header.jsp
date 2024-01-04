@@ -1,3 +1,4 @@
+<%@page import="it602003.objects.UserObject"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <link
@@ -243,7 +244,16 @@
 							</span> <span class="nav-link-text">Publisher</span>
 						</a> <!--//nav-link-->
 					</li>
+					<%
+					UserObject user = (UserObject) session.getAttribute("user");
+					%>
 					<!--//nav-item-->
+					<li class="nav-item">
+						<!--//Bootstrap Icons: https://icons.getbootstrap.com/ --> <a class="nav-link" href="${pageContext.request.contextPath}/borrowing-form?user_id=<%= user.getUser_id() %>"> <span class="nav-icon">
+								<i class="fa-solid fa-file-invoice"></i>
+							</span> <span class="nav-link-text">Phiếu mượn/trả</span>
+						</a> <!--//nav-link-->
+					</li>
 				</ul>
 				<!--//app-menu-->
 			</nav>

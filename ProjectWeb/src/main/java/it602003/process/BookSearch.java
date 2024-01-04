@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.mysql.cj.Session;
+
 import it602003.objects.BookObject;
 
 /**
@@ -19,19 +21,21 @@ import it602003.objects.BookObject;
 @WebServlet("/booksearch")
 public class BookSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public BookSearch() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public BookSearch() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int luaChon = Integer.parseInt(request.getParameter("luaChonSearch"));
 		System.out.println(luaChon);
@@ -42,36 +46,60 @@ public class BookSearch extends HttpServlet {
 		switch (luaChon) {
 		case 1: {
 			ArrayList<BookObject> booksearch = book.searchBook(name);
+			System.out.println(booksearch.toArray().toString());
 			System.out.println(booksearch.size());
 			session.setAttribute("booksearch", booksearch);
 			session.setAttribute("luaChon", luaChon);
 			session.setAttribute("thongTinSearch", name);
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
-		    dispatcher.forward(request, response);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
+			dispatcher.forward(request, response);
 
 		}
 		case 2: {
-			ArrayList<BookObject> booksearch = book.searchBook(name);
+			ArrayList<BookObject> booksearch = book.searchBooks(name);
+			System.out.println(booksearch.toArray().toString());
 			System.out.println(booksearch.size());
-			
-			request.setAttribute("numberBook", booksearch.size());
-			request.setAttribute("booksearch", booksearch);
-		    RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
-		    dispatcher.forward(request, response);
+			session.setAttribute("booksearch", booksearch);
+			session.setAttribute("luaChon", luaChon);
+			session.setAttribute("thongTinSearch", name);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
+			dispatcher.forward(request, response);
 
 		}
+		case 3: {
+			ArrayList<BookObject> booksearch = book.searchBooksByAuthorName(name);
+			System.out.println(booksearch.toArray().toString());
+			System.out.println(booksearch.size());
+			session.setAttribute("booksearch", booksearch);
+			session.setAttribute("luaChon", luaChon);
+			session.setAttribute("thongTinSearch", name);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
+			dispatcher.forward(request, response);
 
+		}
+		case 4: {
+			ArrayList<BookObject> booksearch = book.searchBooksByPublisherName(name);
+			System.out.println(booksearch.toArray().toString());
+			System.out.println(booksearch.size());
+			session.setAttribute("booksearch", booksearch);
+			session.setAttribute("luaChon", luaChon);
+			session.setAttribute("thongTinSearch", name);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("bookview");
+			dispatcher.forward(request, response);
+
+		}
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + name);
 		}
-		
-		
+
 	}
-	
+
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}

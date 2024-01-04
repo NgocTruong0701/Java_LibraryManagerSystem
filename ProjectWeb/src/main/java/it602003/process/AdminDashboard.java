@@ -9,9 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import it602003.objects.AuthorObject;
 import it602003.objects.CategoryObject;
+import it602003.objects.UserObject;
 
 /**
  * Servlet implementation class AdminDashboard
@@ -39,7 +41,7 @@ public class AdminDashboard extends HttpServlet {
 		
 		User u = new User();
 		int totalUsers = u.getTotalUsers(0);
-		request.setAttribute("totalUsers", totalBooks);
+		request.setAttribute("totalUsers", totalUsers);
 		
 		Author a = new Author();
 		ArrayList<AuthorObject> authors = a.getAllAuthors();
@@ -48,6 +50,10 @@ public class AdminDashboard extends HttpServlet {
 		Category c = new Category();
 		ArrayList<CategoryObject> categories = c.getAllCategories();
 		request.setAttribute("categories", categories);
+		
+		HttpSession session = request.getSession();
+        UserObject user = (UserObject) session.getAttribute("user");
+        request.setAttribute("user", user); 
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/view/Index.jsp");
 	    dispatcher.forward(request, response);

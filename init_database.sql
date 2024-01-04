@@ -74,22 +74,6 @@ CREATE TABLE tblreturn_slip (
     FOREIGN KEY (user_id) REFERENCES tbluser(user_id)
 );
 
-CREATE TABLE book_borrowing_form (
-    book_id INT,
-    borrowing_form_id INT,
-    FOREIGN KEY (book_id) REFERENCES tblbook(book_id),
-    FOREIGN KEY (borrowing_form_id) REFERENCES tblborrowing_form(borrowing_form_id),
-    PRIMARY KEY (book_id, borrowing_form_id)
-);
-
-CREATE TABLE book_return_slip (
-    book_id INT,
-    return_slip_id INT,
-    FOREIGN KEY (book_id) REFERENCES tblbook(book_id),
-    FOREIGN KEY (return_slip_id) REFERENCES tblreturn_slip(return_slip_id),
-    PRIMARY KEY (book_id, return_slip_id)
-);
-
 
 -- Thêm cột created_at và updated_at vào tblcategory
 ALTER TABLE tblcategory
@@ -118,21 +102,13 @@ ADD updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 -- Thêm cột created_at và updated_at vào tblborrowing_form
 ALTER TABLE tblborrowing_form
+ADD book_id INT 
 ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 ADD updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
 -- Thêm cột created_at và updated_at vào tblreturn_slip
 ALTER TABLE tblreturn_slip
-ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-ADD updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
--- Thêm cột created_at và updated_at vào book_borrowing_form
-ALTER TABLE book_borrowing_form
-ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-ADD updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
-
--- Thêm cột created_at và updated_at vào book_return_slip
-ALTER TABLE book_return_slip
+ADD borrowing_form_id INT 
 ADD created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 ADD updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
